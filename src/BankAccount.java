@@ -1,13 +1,17 @@
+import java.text.NumberFormat;
+
 public class BankAccount {
-        
-	private static long prevAccountNo = 100000000L;
-	
+
+    private static long prevAccountNo = 100000000L;
+    
     private int pin;
     private long accountNo;
     private double balance;
     private User accountHolder;
     
-    public BankAccount(int pin, long accountNo, double balance, User accountHolder) {
+    /* constructor and methods not shown */
+    
+    public BankAccount(int pin, User accountHolder) {
         this.pin = pin;
         this.accountNo = ++BankAccount.prevAccountNo;
         this.balance = 0.0;
@@ -22,18 +26,19 @@ public class BankAccount {
         return accountNo;
     }
     
-    public double getBalance() {
-    	NumberFormat currency = NumberFormat.getCurrencyInstance();
-        
-        return currency.format(balance);
-    }
+
+	public String getBalance() {
+	    NumberFormat currency = NumberFormat.getCurrencyInstance();
+	    
+	    return currency.format(balance);
+	}
     
     public User getAccountHolder() {
         return accountHolder;
     }
     
-    public void deposit(double amount) {
-    	if (amount <= 0) {
+    public int deposit(double amount) {
+        if (amount <= 0) {
             return ATM.INVALID;    
         } else {
             balance = balance + amount;
@@ -41,9 +46,9 @@ public class BankAccount {
             
         return ATM.SUCCESS;
     }
-    
-    public void withdraw(double amount) {
-    	if (amount <= 0) {
+
+    public int withdraw(double amount) {
+        if (amount <= 0) {
             return ATM.INVALID;
         } else if (amount > balance) {
             return ATM.INSUFFICIENT;
