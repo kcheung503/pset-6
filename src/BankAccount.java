@@ -18,7 +18,19 @@ public class BankAccount {
         this.accountHolder = accountHolder;
     }
     
-    public int getPin() {
+    public BankAccount(int i, int j, int k, User user) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public BankAccount(int pin2, long generateAccountNo, User user) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public BankAccount(int parsePin, long parseAccountNo, double parseBalance, User parseUser) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getPin() {
         return pin;
     }
     
@@ -58,6 +70,7 @@ public class BankAccount {
         
         return ATM.SUCCESS;
     }
+    
     ////////////////////////////////////////////////////////////////////////////
     //                                                                        //
     // Refer to the Simple ATM tutorial to fill in the details of this class. //
