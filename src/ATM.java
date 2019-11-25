@@ -2,23 +2,24 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ATM {
-    
-	private Scanner in;
-	private BankAccount activeAccount;
-	private Bank bank;
-	    
-	 public static final int VIEW = 1;
-	 public static final int DEPOSIT = 2;
-	 public static final int WITHDRAW = 3;
-	 public static final int TRANSFER = 4;
-	 public static final int LOGOUT = 5;
-	 
-	 public static final int INVALID = 0;
-     public static final int INSUFFICIENT = 1;
-     public static final int SUCCESS = 2; 
-   
-     public static final int FIRST_NAME_WIDTH = 20;
-	 public static final int LAST_NAME_WIDTH = 20;	
+
+    private Scanner in;
+    private BankAccount activeAccount;
+    private Bank bank;
+    private User newUser;
+
+    public static final int VIEW = 1;
+    public static final int DEPOSIT = 2;
+    public static final int WITHDRAW = 3;
+    public static final int TRANSFER = 4;
+    public static final int LOGOUT = 5;
+    public static final int FIRST_NAME_WIDTH = 20;
+    public static final int LAST_NAME_WIDTH = 30;
+
+    public static final int INVALID = 0;
+    public static final int INSUFFICIENT = 1;
+    public static final int SUCCESS = 2;
+    public static final int OVERFLOW = 3;
 	 
     ////////////////////////////////////////////////////////////////////////////
     //                                                                        //
