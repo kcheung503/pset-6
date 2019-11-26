@@ -20,32 +20,33 @@ public class BankAccount {
         this.accountHolder = accountHolder;
     }
 
-	public int getPin() {
+    public int getPin() {
         return pin;
     }
-    
+
     public long getAccountNo() {
         return accountNo;
     }
-    
 
-	public String getBalance() {
-	    NumberFormat currency = NumberFormat.getCurrencyInstance();
-	    
-	    return currency.format(balance);
-	}
-    
+    public String getBalance() {
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+
+        return currency.format(balance);
+    }
+
     public User getAccountHolder() {
         return accountHolder;
     }
     
     public int deposit(double amount) {
         if (amount <= 0) {
-            return ATM.INVALID;    
+            return ATM.INVALID;
+        } else if ((amount + balance) > 999999999999.99){
+        	return ATM.OVERFLOW;
         } else {
             balance = balance + amount;
         }
-            
+
         return ATM.SUCCESS;
     }
 
@@ -57,7 +58,7 @@ public class BankAccount {
         } else {
             balance = balance - amount;
         }
-        
+
         return ATM.SUCCESS;
     }
     
