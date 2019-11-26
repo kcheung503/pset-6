@@ -2,33 +2,23 @@ import java.text.NumberFormat;
 
 public class BankAccount {
 
-    private static long prevAccountNo = 100000000L;
-    
     private int pin;
     private long accountNo;
     private double balance;
     private User accountHolder;
-    
-    /* constructor and methods not shown */
-    
-    public BankAccount(int pin, User accountHolder) {
+
+    public BankAccount(int pin, long accountNo, double balance, User accountHolder) {
         this.pin = pin;
-        this.accountNo = ++BankAccount.prevAccountNo;
+        this.accountNo = accountNo;
+        this.balance = balance;
+        this.accountHolder = accountHolder;
+    }
+    public BankAccount(int pin, long accountNo, User accountHolder) {
+        this.pin = pin;
+        this.accountNo = accountNo;
         this.balance = 0.0;
         this.accountHolder = accountHolder;
     }
-    
-    public BankAccount(int i, int j, int k, User user) {
-		// TODO Auto-generated constructor stub
-	}
-
-	public BankAccount(int pin2, long generateAccountNo, User user) {
-		// TODO Auto-generated constructor stub
-	}
-
-	public BankAccount(int parsePin, long parseAccountNo, double parseBalance, User parseUser) {
-		// TODO Auto-generated constructor stub
-	}
 
 	public int getPin() {
         return pin;
