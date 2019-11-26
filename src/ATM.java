@@ -32,17 +32,14 @@ public class ATM {
      * Constructs a new instance of the ATM class.
      */
     	 
-        public ATM() {
-            in = new Scanner(System.in);
-            
-            activeAccount = new BankAccount(1234, 123456789, 0, new User("Ryan", "Wilson"));
-            
-            try {
-    			this.bank = new Bank();
-    		} catch (IOException e) {
-    			// cleanup any resources (i.e., the Scanner) and exit
-    		}
-        }
+    public ATM() {
+        in = new Scanner(System.in);
+        try {
+			this.bank = new Bank();
+		} catch (IOException e) {
+            in.close();
+		}
+    }
         
         public void startup() {
         	long accountNo;
