@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
-	
-	/*
-	 * Accounts are read from a fixed-width file. Each account is represented
-	 * as a single line of text. These start and end indexes help to parse the
-	 *line of text into individual account fields.
-	 */
-    
+
+    /*
+     * Accounts are read from a fixed-width file. Each account is represented
+     * as a single line of text. These start and end indexes help to parse the
+     *line of text into individual account fields.
+     */
+
     private final static int ACCT_START = 0;
     private final static int ACCT_END = 9;
     private final static int PIN_START = 9;
@@ -25,9 +25,9 @@ public class Bank {
     private final static int LAST_NAME_START = 33;
     private final static int LAST_NAME_END = 63;
     private final static int BALANCE_START = 63;
-    
-    private final static String DATA = "data/accounts.dat";		// data file path
-    
+
+    private final static String DATA = "../data/accounts.dat";		// data file path
+
     private List<BankAccount> accounts;							// an in-memory list of BankAccount objects
     
     /**
@@ -38,7 +38,7 @@ public class Bank {
     
     public Bank() throws IOException {
         accounts = init();
-        
+
         if (accounts == null) {
         	throw new IOException();
         }
@@ -54,7 +54,7 @@ public class Bank {
     
     public BankAccount createAccount(int pin, User user) {
     	accounts.add(new BankAccount(pin, generateAccountNo(), user));
-    	
+
     	return accounts.get(accounts.size() - 1);
     }
     
@@ -68,8 +68,8 @@ public class Bank {
     
     public BankAccount login(long accountNo, int pin) {
         BankAccount bankAccount = getAccount(accountNo);
-        
-        if (bankAccount.getPin() == pin) {
+
+        if (bankAccount != null && bankAccount.getPin() == pin) {
             return bankAccount;
         } else {
             return null;
@@ -89,7 +89,7 @@ public class Bank {
                 return account;
             }
         }
-        
+
         return null;
     }
     
@@ -101,16 +101,16 @@ public class Bank {
     
     public void update(BankAccount account) {
         int index = -1;
-        
+
         for (int i = 0; i < accounts.size(); i++) {
             BankAccount storedAccount = accounts.get(i);
-            
+
             if (storedAccount.getAccountNo() == account.getAccountNo()) {
                 index = i;
                 break;
             }
         }
-        
+
         accounts.set(index, account);
     }
     
@@ -124,11 +124,11 @@ public class Bank {
                 bw.write(account.toString());
                 bw.newLine();
             }
-            
+
             return true;
         } catch (IOException e) {
         	System.err.println("Error: Unable to write to data file.");
-        	
+
         	return false;
         }
     }
@@ -142,23 +142,23 @@ public class Bank {
     
     private List<BankAccount> init() {
         List<BankAccount> accounts = new ArrayList<BankAccount>();
-        
+
         try (BufferedReader br = new BufferedReader(new FileReader(new File(DATA)))) {
             String account;
-            
+
             while ((account = br.readLine()) != null) {
                 accounts.add(Bank.parseBankAccount(account));
             }
         } catch (FileNotFoundException e) {
             System.err.println("Error: Unable to find data file.");
-            
+
             accounts = null;
         } catch (IOException e) {
             System.err.println("Error: Unable to read from data file.");
-            
+
             accounts = null;
         }
-        
+
         return accounts;
     }
     
@@ -170,13 +170,13 @@ public class Bank {
     
     private long generateAccountNo() {
         long accountNo = -1;
-        
+
         for (BankAccount account : accounts) {
             if (account.getAccountNo() > accountNo) {
                 accountNo = account.getAccountNo();
             }
         }
-        
+
         return accountNo + 1;
     }
     
@@ -224,7 +224,7 @@ public class Bank {
      * @return the account holder
      */
     
-    private static User parseUser(String account) {        
+    private static User parseUser(String account) {
         return new User(account.substring(FIRST_NAME_START, FIRST_NAME_END).strip(),
             account.substring(LAST_NAME_START, LAST_NAME_END).strip()
         );
