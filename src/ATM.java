@@ -233,15 +233,38 @@ public class ATM {
         }
     }
 
-        public void transfer() {
-            System.out.print("\nEnter account: ");
-            long secondedAccountNumber = in.nextLong();
-            System.out.print("\nEnter amount: ");
-            double amount = in.nextDouble();
-            BankAccount transferAccount = bank.getAccount(secondedAccountNumber);
-            activeAccount.withdraw(amount);
-            transferAccount.deposit(amount);
+    public void transfer() {
+    	boolean validAccount = true;
+        System.out.print("\nEnter the other account no. : ");
+        long secondedAccountNumber = in.nextLong();
+        System.out.print("Enter amount                : ");
+        double amount = in.nextDouble();
+        if (bank.getAccount(secondedAccountNumber) == null) {
+        	validAccount = false;
         }
+        if (validAccount) {
+        	BankAccount transferAccount = bank.getAccount(secondedAccountNumber);
+        	int withdrawStatus = activeAccount.withdraw(amount);
+            if (activeAccount == transferAccount) {
+                System.out.println("\nTransfer rejected. Destination account matches origin.\n");
+            } else if (withdrawStatus == ATM.INVALID) {
+                System.out.println("\nTransfer rejected. Amount must be greater than $0.00.\n");
+            } else if (withdrawStatus == ATM.INSUFFICIENT) {
+                System.out.println("\nTransfer rejected. Insufficient funds.\n");
+            } else if (withdrawStatus == ATM.SUCCESS) {
+            	int depositStatus = transferAccount.deposit(amount);
+                if (depositStatus == ATM.OVERFLOW) {
+                    System.out.println("\nTransfer rejected. Amount would cause destination balance to exceed $999,999,999,999.99.\n");
+                } else if (depositStatus == ATM.SUCCESS) {
+                	System.out.println("\nTransfer accepted.\n");
+                    bank.update(activeAccount);
+                    bank.save();
+                }
+            }
+        } else {
+        	System.out.println("\nTransfer rejected. Destination account not found.\n");
+        }
+    }
             
         public void shutdown() {
             if (in != null) {
