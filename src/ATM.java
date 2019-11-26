@@ -266,22 +266,20 @@ public class ATM {
         }
     }
             
-        public void shutdown() {
-            if (in != null) {
-                in.close();
-            }
-            
-            System.out.println("\nGoodbye!");
-            System.exit(0);
+    public void shutdown() {
+        if (in != null) {
+            in.close();
         }
-        
-    
-    /*
-     * Application execution begins here.
-     */
-    
-    public static void main(String[] args) {
-        ATM atm = new ATM();
-        atm.startup();
+        System.out.println("\nGoodbye!");
+        System.exit(0);
     }
+
+/*
+ * Application execution begins here.
+ */
+
+    public static void main(String[] args) {
+    	ATM atm = new ATM();
+    	atm.startup();
+	}
 }
