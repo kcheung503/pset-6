@@ -47,6 +47,26 @@ public class ATM {
         boolean createAccount = false;
         System.out.println("Welcome to the AIT ATM!");
             
+        while (true) {
+            System.out.print("\nAccount No.: ");
+            String tempAccNo = in.nextLine();
+            if (tempAccNo.isEmpty()) {
+                accountNo = 0;
+            } else if (tempAccNo.charAt(0) == '+') {
+                accountNo = 0;
+                createAccount = true;
+            } else if (tempAccNo.matches("[0-9]+")) {
+                accountNo = Long.parseLong(tempAccNo);
+            } else if (tempAccNo.matches("-")) {
+                accountNo = 0;
+            } else if (!(tempAccNo.matches("[0-9]+")) && !(tempAccNo.contains("-")) ) {
+                accountNo = 0;
+            } else if (Long.parseLong(tempAccNo) == -1) {
+                accountNo = -1;
+            } else {
+                accountNo = 0;
+            }
+            
             while (true) {
                 System.out.print("Account No.: ");
                 if(in.hasNextLong()) {
