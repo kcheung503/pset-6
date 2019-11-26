@@ -29,13 +29,13 @@ public class Bank {
     private final static String DATA = "../data/accounts.dat";		// data file path
 
     private List<BankAccount> accounts;							// an in-memory list of BankAccount objects
-    
+
     /**
      * Constructs a new instance of the Bank class.
-     * 
+     *
      * @throws IOException in the case of a file I/O error
      */
-    
+
     public Bank() throws IOException {
         accounts = init();
 
@@ -43,29 +43,29 @@ public class Bank {
         	throw new IOException();
         }
     }
-    
+
     /**
      * Creates and returns a new BankAccount object.
-     * 
+     *
      * @param pin the PIN to be associated with this account
      * @param user the account holder to be associated with this account
      * @return the newly created account
      */
-    
+
     public BankAccount createAccount(int pin, User user) {
     	accounts.add(new BankAccount(pin, generateAccountNo(), user));
 
     	return accounts.get(accounts.size() - 1);
     }
-    
+
     /**
      * Logs into an existing account.
-     * 
+     *
      * @param accountNo the account number
      * @param pin the account PIN
      * @return the BankAccount object (provided the login credentials are valid)
      */
-    
+
     public BankAccount login(long accountNo, int pin) {
         BankAccount bankAccount = getAccount(accountNo);
 
@@ -75,14 +75,14 @@ public class Bank {
             return null;
         }
     }
-    
+
     /*
      * Retrieves an existing account by account number.
-     * 
+     *
      * @param accountNo the account number to retrieve
      * @return the BankAccount object associated with that account number
      */
-    
+
     public BankAccount getAccount(long accountNo) {
         for (BankAccount account : accounts) {
             if (account.getAccountNo() == accountNo) {
@@ -92,13 +92,13 @@ public class Bank {
 
         return null;
     }
-    
+
     /**
      * Updates the information associated with a specific account.
-     * 
+     *
      * @param account the BankAccount object to be updated
      */
-    
+
     public void update(BankAccount account) {
         int index = -1;
 
@@ -113,11 +113,11 @@ public class Bank {
 
         accounts.set(index, account);
     }
-    
+
     /**
      * Saves the state of any modified accounts.
      */
-    
+
     public boolean save() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(DATA))) {
             for (BankAccount account : accounts) {
@@ -132,14 +132,14 @@ public class Bank {
         	return false;
         }
     }
-    
+
     /*
      * Initializes the Bank's internal list of accounts. This information is read
      * in from the accounts.dat file.
-     * 
+     *
      * @return a list of BankAccount objects
      */
-    
+
     private List<BankAccount> init() {
         List<BankAccount> accounts = new ArrayList<BankAccount>();
 
@@ -161,13 +161,13 @@ public class Bank {
 
         return accounts;
     }
-    
+
     /*
      * Generates the next sequential account number.
-     * 
+     *
      * @return the next account number
      */
-    
+
     private long generateAccountNo() {
         long accountNo = -1;
 
@@ -179,14 +179,14 @@ public class Bank {
 
         return accountNo + 1;
     }
-    
+
     /*
      * Parses the BankAccount object from an account string.
-     * 
+     *
      * @param account a string of text representing account details
      * @return the bank account
      */
-    
+
     private static BankAccount parseBankAccount(String account) {
         return new BankAccount(Bank.parsePin(account),
             Bank.parseAccountNo(account),
@@ -194,49 +194,49 @@ public class Bank {
             Bank.parseUser(account)
         );
     }
-    
+
     /*
      * Parses the account number from an account string.
-     * 
+     *
      * @param account a string of text representing account details
      * @return the account number
      */
-    
+
     private static long parseAccountNo(String account) {
         return Long.parseLong(account.substring(ACCT_START, ACCT_END));
     }
-    
+
     /*
      * Parses the PIN from an account string.
-     * 
+     *
      * @param account a string of text representing account details
      * @return the account PIN
      */
-    
+
     private static int parsePin(String account) {
         return Integer.parseInt(account.substring(PIN_START, PIN_END));
     }
-    
+
     /*
      * Parses the User object from an account string.
-     * 
+     *
      * @param account a string of text representing account details
      * @return the account holder
      */
-    
+
     private static User parseUser(String account) {
         return new User(account.substring(FIRST_NAME_START, FIRST_NAME_END).strip(),
             account.substring(LAST_NAME_START, LAST_NAME_END).strip()
         );
     }
-    
+
     /*
      * Parses the balance from an account string.
-     * 
+     *
      * @param account a string of text representing account details
      * @return the account balance
      */
-    
+
     private static double parseBalance(String account) {
         return Double.parseDouble(account.substring(BALANCE_START).strip());
     }
