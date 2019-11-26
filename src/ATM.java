@@ -41,10 +41,11 @@ public class ATM {
 		}
     }
         
-        public void startup() {
-        	long accountNo;
-        	int pin;
-            System.out.println("Welcome to the AIT ATM!\n");
+    public void startup() {
+    	long accountNo;
+    	int pin;
+        boolean createAccount = false;
+        System.out.println("Welcome to the AIT ATM!");
             
             while (true) {
                 System.out.print("Account No.: ");
