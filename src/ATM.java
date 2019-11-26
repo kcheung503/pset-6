@@ -67,21 +67,21 @@ public class ATM {
                 accountNo = 0;
             }
             
-            while (true) {
-                System.out.print("Account No.: ");
-                if(in.hasNextLong()) {
-                	accountNo = in.nextLong();
-                }else {
-                	accountNo = 0;
-                	in.nextLine();
-                }
-      
+            if (!(createAccount)) {
                 System.out.print("PIN        : ");
-                if(in.hasNextInt()) {
-                	pin = in.nextInt();
-                }else {
-                	pin = 0;
-                	in.nextLine();
+                String tempPin = in.nextLine();
+                if (tempPin.isEmpty()) {
+                    pin = 0;
+                } else if (tempPin.matches("[0-9]+")) {
+                    pin = Integer.parseInt(tempPin);
+                } else if (tempPin.matches("-")) {
+                    pin = 0;
+                } else if (!(tempPin.matches("[0-9]+")) && !(tempPin.contains("-")) ) {
+                    pin = 0;
+                } else if (Integer.parseInt(tempPin) == -1) {
+                    pin = -1;
+                } else {
+                    pin = 0;
                 }
                 
                 if (isValidLogin(accountNo, pin)) {
@@ -94,7 +94,7 @@ public class ATM {
                             case DEPOSIT: deposit(); break;
                             case WITHDRAW: withdraw(); break;
                             case TRANSFER: transfer(); break;
-                            case LOGOUT: validLogin = false; break;
+                            case LOGOUT: bank.update(activeAccount); bank.save(); validLogin = false; in.nextLine(); break;
                             default: System.out.println("\nInvalid selection.\n"); break;
                         }
                     }
